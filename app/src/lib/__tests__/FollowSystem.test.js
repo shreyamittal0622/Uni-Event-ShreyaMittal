@@ -1,9 +1,4 @@
-import {
-    collection,
-    deleteDoc,
-    doc,
-    setDoc,
-} from 'firebase/firestore';
+import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
 
 jest.mock('firebase/firestore', () => ({
     collection: jest.fn(),
@@ -13,19 +8,11 @@ jest.mock('firebase/firestore', () => ({
 }));
 
 describe('Follow System', () => {
-
     const currentUserId = 'user1';
     const targetUserId = 'user2';
 
     test('should follow user', async () => {
-
-        const followRef = doc(
-            {},
-            'users',
-            currentUserId,
-            'following',
-            targetUserId
-        );
+        const followRef = doc({}, 'users', currentUserId, 'following', targetUserId);
 
         await setDoc(followRef, {
             createdAt: new Date(),
@@ -35,18 +22,10 @@ describe('Follow System', () => {
     });
 
     test('should unfollow user', async () => {
-
-        const followRef = doc(
-            {},
-            'users',
-            currentUserId,
-            'following',
-            targetUserId
-        );
+        const followRef = doc({}, 'users', currentUserId, 'following', targetUserId);
 
         await deleteDoc(followRef);
 
         expect(deleteDoc).toHaveBeenCalled();
     });
-
 });

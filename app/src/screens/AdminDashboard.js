@@ -15,7 +15,5 @@ export default function AdminDashboard() {
         );
     }
 
-    
-
     return width >= 1024 ? <DesktopAdmin /> : <MobileAdmin />;
 }

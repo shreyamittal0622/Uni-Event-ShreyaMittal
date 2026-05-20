@@ -2,7 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 // import { Picker } from '@react-native-picker/picker'; // Removed native picker
 import { LinearGradient } from 'expo-linear-gradient';
 import { updateProfile } from 'firebase/auth';
-import { addDoc, collection, doc, getCountFromServer, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {
+    addDoc,
+    collection,
+    doc,
+    getCountFromServer,
+    getDoc,
+    setDoc,
+    updateDoc,
+} from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import {
     Alert,
@@ -102,16 +110,15 @@ export default function ProfileScreen({ navigation }) {
                         setRating(0);
                     }
 
-
                     // Followers count
                     const followersSnap = await getCountFromServer(
-                        collection(db, 'users', user.uid, 'followers')
+                        collection(db, 'users', user.uid, 'followers'),
                     );
                     setFollowersCount(followersSnap.data().count);
 
                     // Following count
                     const followingSnap = await getCountFromServer(
-                        collection(db, 'users', user.uid, 'following')
+                        collection(db, 'users', user.uid, 'following'),
                     );
                     setFollowingCount(followingSnap.data().count);
                 }
@@ -215,24 +222,11 @@ export default function ProfileScreen({ navigation }) {
         }
     };
 
-
     const handleFollowToggle = async targetUserId => {
         try {
-            const followRef = doc(
-                db,
-                'users',
-                user.uid,
-                'following',
-                targetUserId
-            );
+            const followRef = doc(db, 'users', user.uid, 'following', targetUserId);
 
-            const followerRef = doc(
-                db,
-                'users',
-                targetUserId,
-                'followers',
-                user.uid
-            );
+            const followerRef = doc(db, 'users', targetUserId, 'followers', user.uid);
 
             if (isFollowing) {
                 await deleteDoc(followRef);
@@ -522,10 +516,10 @@ export default function ProfileScreen({ navigation }) {
                                                 {y === '1'
                                                     ? '1st'
                                                     : y === '2'
-                                                        ? '2nd'
-                                                        : y === '3'
-                                                            ? '3rd'
-                                                            : y + 'th'}{' '}
+                                                      ? '2nd'
+                                                      : y === '3'
+                                                        ? '3rd'
+                                                        : y + 'th'}{' '}
                                                 Year
                                             </Text>
                                         </TouchableOpacity>

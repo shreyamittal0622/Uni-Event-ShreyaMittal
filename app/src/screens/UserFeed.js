@@ -93,7 +93,7 @@ export default function UserFeed({ navigation, headerContent }) {
 
                 const q = query(
                     collection(db, 'rsvps'),
-                    where('userId', 'in', followingIds.slice(0, 10))
+                    where('userId', 'in', followingIds.slice(0, 10)),
                 );
 
                 const unsubRsvps = onSnapshot(q, rsvpSnap => {
@@ -125,7 +125,7 @@ export default function UserFeed({ navigation, headerContent }) {
                 });
 
                 return () => unsubRsvps();
-            }
+            },
         );
 
         return () => unsubscribe();
@@ -384,7 +384,7 @@ export default function UserFeed({ navigation, headerContent }) {
             <EventCard
                 event={item}
                 isRegistered={participatingIds.includes(item.id)}
-                onLike={() => { }}
+                onLike={() => {}}
                 onShare={async () => {
                     try {
                         await Share.share({
@@ -410,9 +410,7 @@ export default function UserFeed({ navigation, headerContent }) {
             <View style={{ marginBottom: 20 }}>
                 {/* Friends Activity Section */}
                 <View style={{ marginBottom: 20 }}>
-                    <Text style={styles.sectionTitle}>
-                        YOUR FRIENDS ARE GOING
-                    </Text>
+                    <Text style={styles.sectionTitle}>YOUR FRIENDS ARE GOING</Text>
 
                     <ScrollView
                         horizontal
